@@ -1,0 +1,12 @@
+name: SkillForge
+version: 0.1.0
+main: com.luciddowall.skillforge.SkillForgePlugin
+api-version: "1.21.4"
+author: luciddowall
+commands:
+  sf:
+    description: SkillForge admin
+    usage: /sf help
+permissions:
+  sf.admin:
+    default: op
