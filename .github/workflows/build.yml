@@ -1,0 +1,39 @@
+name: Build SkillForge
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+
+      # Gradle을 러너에 설치해서 사용 (로컬에 Gradle/Wrapper 없어도 됨)
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+        with:
+          gradle-version: "8.8"
+
+      # 네 프로젝트가 shadowJar를 쓰면 shadowJar, 아니면 build만 해도 됨
+      - name: Build
+        run: |
+          gradle --no-daemon clean shadowJar
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: SkillForge-JAR
+          path: |
+            **/build/libs/*.jar
+            **/build/shadow/*.jar
