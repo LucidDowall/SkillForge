@@ -24,9 +24,9 @@ dependencies {
     implementation("it.unimi.dsi:fastutil:8.5.13")
 }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-    options.release.set(21)
+tasks.withType<JavaCompile>().configureEach {
+  options.encoding = "UTF-8"
+  options.release.set(17) // ★ 핵심: bytecode를 Java 17(major 61)로 생성
 }
 
 tasks.shadowJar {
